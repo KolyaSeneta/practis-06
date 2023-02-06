@@ -1,13 +1,16 @@
 import { logDOM } from "@testing-library/react";
 import { Component } from "react";
 import SelectBasicExample from "./Select.jsx"
-
+import List from "./List"
+import Modal from "./Modal"
+import { ModalDialog } from "react-bootstrap";
 
 class App extends Component {
   state= {
     
     img: [],
-    value:"1" 
+    value: "1",
+    url: "",
   }
 
   changeValue = (e) => {
@@ -30,17 +33,31 @@ class App extends Component {
     }
   
   }
+  openModal = (state) => {
+    this.setState({
+      url: state
+    })
+  }
+  closeModal = (e) => {
+    this.setState({
+      url: ""
+    })
+  }
 
-
-
-  
-  
   render() {
     return (
-    < div >
-    <SelectBasicExample changeValue = {this.changeValue} /> 
-    </div >
-  )
+      <>
+      < div >
+        <SelectBasicExample changeValue={this.changeValue} /> 
+          <List listImg={this.state.img} openModal={this.openModal}  />
+
+      </div >
+      <div>
+         { this.state.url ? <Modal url = {this.state.url}  closeModal = {this.closeModal}  /> : null }
+        </div>
+        </>
+    )
+    
 }
   
 
